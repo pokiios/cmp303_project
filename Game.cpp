@@ -1,97 +1,69 @@
 ﻿#include "Game.h"
 
-Game::Game():
-mWindow(sf::VideoMode(1280, 720), "CMP303 Coursework"), mPlayer()
+Game::Game() : window("CMP303 Coursework", sf::Vector2u(1280, 720))
 {
-        mPlayer.setRadius(20.f);
-        mPlayer.setPosition(100.f, 100.f);
-        mPlayer.setFillColor(sf::Color::Cyan);
-}
-
-void Game::run()
-{
-    sf::Clock clock;
-    while(mWindow.isOpen())
-    {
-        sf::Time deltaTime = clock.restart();
-        processEvents();
-        update(&deltaTime);
-        render();
-    }
-}
-
-void Game::processEvents()
-{
-    sf::Event event;
-    while(mWindow.pollEvent(event))
-    {
-        switch(event.type)
-        {
-        case sf::Event::KeyPressed:
-            handlePlayerInput(event.key.code, true);
-            break;
-        case sf::Event::KeyReleased:
-            handlePlayerInput(event.key.code, false);
-            break;
-        case sf::Event::Closed:
-            mWindow.close();
-            break;
-        default:
-            break;
-        }
-    }
-}
-
-void Game::handlePlayerInput(sf::Keyboard::Key key, bool isPressed)
-{
-    if (isPressed == true)
-    {
-        switch(key)
-        {
-        case sf::Keyboard::W:
-            moveY = -1;
-            break;
-        case sf::Keyboard::S:
-            moveY = 1;
-            break;
-        case sf::Keyboard::A:
-            moveX = -1;
-           break;
-        case sf::Keyboard::D:
-            moveX = 1;
-            break;
-        default:
-            moveX = 0;
-            moveY = 0;
-            break;
-        }
-    }
-    else
-    {
-        moveX = 0;
-        moveY = 0;
-    }
+    // Setting up Class Members
+    player.setRadius(20.f);
+    player.setPosition(window.GetWindowSize().x/2, window.GetWindowSize().y/2);
+    player.setFillColor(sf::Color::Cyan);
 }
 
 
-void Game::update(sf::Time* deltaTime)
+void main(int argc, void** argv[])
 {
-    sf::Vector2f movement(0.f,0.f);
-    movement.x += moveX*speed;
-    movement.y += moveY*speed;
+    // Program Entry Point
+    Game game; // Creating Game Object
+    while(!game.getWindow()->isDone())
+    {
+        // Game Loop
+        game.handleInput();
+        game.update();
+        game.render();
+        game.restartClock(); // Restarting the Clock
+    }
+}
 
-    mPlayer.move(movement*deltaTime->asSeconds());
+Game::~Game()
+{
+    
+}
+
+void Game::update()
+{
+    window.update(); // Update Window Events
+    window.Draw(player);
+    window.endDraw(); // Display
 }
 
 void Game::render()
 {
-    mWindow.clear();
-    mWindow.draw(mPlayer);
-    mWindow.display();
 }
 
-int main()
+void Game::handleInput()
 {
-    Game game;
-    game.run();
+    
 }
+
+Window* Game::getWindow()
+{
+    return &window;
+}
+
+sf::Time Game::GetElapsed()
+{
+    return tElapsed;
+}
+
+void Game::restartClock()
+{
+    tElapsed = clock.restart();
+}
+
+
+
+
+
+
+
+
+
