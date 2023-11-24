@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Network.hpp>
 #include "Window.h"
+//#include "Menu.h"
 
 class Game
 {
@@ -23,4 +24,5 @@ private:
 
     sf::Clock clock;
     sf::Time tElapsed;
+    //Menu menu;
 };

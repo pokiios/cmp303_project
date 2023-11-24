@@ -8,21 +8,6 @@ Game::Game() : window("CMP303 Coursework", sf::Vector2u(1280, 720))
     player.setFillColor(sf::Color::Cyan);
 }
 
-
-void main(int argc, void** argv[])
-{
-    // Program Entry Point
-    Game game; // Creating Game Object
-    while(!game.getWindow()->isDone())
-    {
-        // Game Loop
-        game.handleInput();
-        game.update();
-        game.render();
-        game.restartClock(); // Restarting the Clock
-    }
-}
-
 Game::~Game()
 {
     
@@ -58,6 +43,22 @@ void Game::restartClock()
 {
     tElapsed = clock.restart();
 }
+
+// MAIN METHOD
+void main(int argc, void** argv[])
+{
+    // Program Entry Point
+    Game game; // Creating Game Object
+    while(!game.getWindow()->isDone())
+    {
+        // Game Loop
+        game.handleInput();
+        game.update();
+        game.render();
+        game.restartClock(); // Restarting the Clock
+    }
+}
+
 
 
 
